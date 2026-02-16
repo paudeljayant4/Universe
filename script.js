@@ -504,9 +504,71 @@ function createKissShower() {
   }
 }
 
+// Create shooting stars
+function createShootingStar() {
+  const star = document.createElement('div');
+  star.className = 'shooting-star';
+  
+  // Random starting position
+  star.style.left = Math.random() * (window.innerWidth * 0.7) + 'px';
+  star.style.top = Math.random() * (window.innerHeight * 0.5) + 'px';
+  
+  document.body.appendChild(star);
+  
+  setTimeout(() => {
+    star.remove();
+  }, 2000);
+}
+
+// Create floating stardust
+function createStardust() {
+  const dust = document.createElement('div');
+  dust.className = 'stardust';
+  
+  dust.style.left = Math.random() * window.innerWidth + 'px';
+  dust.style.top = window.innerHeight + 'px';
+  dust.style.animationDuration = (Math.random() * 4 + 6) + 's';
+  
+  document.body.appendChild(dust);
+  
+  setTimeout(() => {
+    dust.remove();
+  }, 10000);
+}
+
+// Create lens flare
+function createLensFlare() {
+  const flare = document.createElement('div');
+  flare.className = 'lens-flare';
+  
+  flare.style.left = Math.random() * window.innerWidth + 'px';
+  flare.style.top = Math.random() * window.innerHeight + 'px';
+  
+  document.body.appendChild(flare);
+  
+  setTimeout(() => {
+    flare.style.opacity = 1;
+  }, 100);
+}
+
+// Create light leak
+function createLightLeak() {
+  const leak = document.createElement('div');
+  leak.className = 'light-leak';
+  document.body.appendChild(leak);
+  
+  setTimeout(() => {
+    leak.style.opacity = 1;
+  }, 100);
+}
+
 // Scene timeline
 function startExperience() {
   startPrompt.classList.add('hidden');
+  
+  // Create atmospheric effects
+  createLensFlare();
+  createLightLeak();
   
   // Start music
   music.volume = 0;
@@ -522,6 +584,16 @@ function startExperience() {
     }
     music.volume = volume;
   }, 50);
+  
+  // Continuous stardust throughout
+  setInterval(() => {
+    if (Math.random() > 0.7) createStardust();
+  }, 800);
+  
+  // Occasional shooting stars
+  setInterval(() => {
+    if (Math.random() > 0.85) createShootingStar();
+  }, 5000);
   
   // Scene 1: The Silence & Intro (0-15s)
   setTimeout(() => {
@@ -543,11 +615,15 @@ function startExperience() {
     brightStar.radius = 5;
     brightStar.z = 0;
     stars.push(brightStar);
+    
+    // Add dramatic shooting star
+    createShootingStar();
   }, 30000);
   
   // Scene 4: Cosmic Bloom (45-60s)
   setTimeout(() => {
     createGalaxy();
+    createShootingStar();
   }, 45000);
   
   // Scene 5: Name Constellation Formation (60-85s)
@@ -561,6 +637,10 @@ function startExperience() {
   setTimeout(() => {
     nameEl.innerHTML = "HIMANI";
     nameEl.style.opacity = 1;
+    // Add multiple shooting stars for dramatic effect
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => createShootingStar(), i * 800);
+    }
   }, 85000);
   
   // Scene 7: First Emotional Message (100-115s)
@@ -573,6 +653,10 @@ function startExperience() {
   setTimeout(() => {
     showText("You are my gravity.<br><br>My light.<br><br>My forever.", 15000);
     morphToHeart();
+    // Increase stardust during emotional peak
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => createStardust(), i * 200);
+    }
   }, 115000);
   
   // Scene 9: Final Message (135-155s)
@@ -583,6 +667,10 @@ function startExperience() {
   // Kiss shower finale (145-150s)
   setTimeout(() => {
     createKissShower();
+    // Extra shooting stars for finale
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => createShootingStar(), i * 600);
+    }
   }, 145000);
   
   // Final fade out (160-165s)
